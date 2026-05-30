@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Cores principais -->
+    <color name="colorPrimary">#6A1B9A</color>
+    <color name="colorPrimaryDark">#4A148C</color>
+    <color name="colorPrimaryLight">#9C27B0</color>
+    <color name="colorAccent">#E040FB</color>
+    <color name="colorPrimaryVariant">#7B1FA2</color>
+    <color name="colorSecondary">#03DAC6</color>
+    <color name="colorSecondaryVariant">#018786</color>
+    <color name="colorOnPrimary">#FFFFFF</color>
+    <color name="colorOnSecondary">#000000</color>
+    <color name="colorBackground">#121212</color>
+    <color name="colorSurface">#1E1E1E</color>
+    <color name="colorOnBackground">#FFFFFF</color>
+    <color name="colorOnSurface">#FFFFFF</color>
+    <color name="colorError">#CF6679</color>
+    <color name="colorOnError">#000000</color>
+    
+    <!-- Cores de texto -->
+    <color name="textPrimary">#FFFFFF</color>
+    <color name="textSecondary">#B3B3B3</color>
+    <color name="textTertiary">#808080</color>
+    <color name="textDisabled">#4D4D4D</color>
+    <color name="textPrimaryInverse">#000000</color>
+    <color name="textSecondaryInverse">#4D4D4D</color>
+    
+    <!-- Cores de fundo -->
+    <color name="background">#121212</color>
+    <color name="backgroundLight">#1E1E1E</color>
+    <color name="backgroundLighter">#2D2D2D</color>
+    <color name="backgroundDark">#0A0A0A</color>
+    <color name="backgroundCard">#1E1E1E</color>
+    <color name="backgroundDialog">#1E1E1E</color>
+    <color name="backgroundBottomSheet">#1E1E1E</color>
+    
+    <!-- Cores de borda -->
+    <color name="border">#333333</color>
+    <color name="borderLight">#4D4D4D</color>
+    <color name="borderDark">#1A1A1A</color>
+    
+    <!-- Cores de estado -->
+    <color name="statePressed">#40E040FB</color>
+    <color name="stateSelected">#26E040FB</color>
+    <color name="stateFocused">#1AE040FB</color>
+    <color name="stateHovered">#0DE040FB</color>
+    <color name="stateActivated">#1AE040FB</color>
+    <color name="stateChecked">#1AE040FB</color>
+    <color name="stateError">#1ACF6679</color>
+    <color name="stateSuccess">#1A4CAF50</color>
+    <color name="stateWarning">#1AFFC107</color>
+    <color name="stateInfo">#1A2196F3</color>
+    
+    <!-- Cores de ícones -->
+    <color name="icon">#FFFFFF</color>
+    <color name="iconInactive">#666666</color>
+    <color name="iconActive">#E040FB</color>
+    <color name="iconDisabled">#4D4D4D</color>
+    
+    <!-- Cores de overlay -->
+    <color name="overlay">#80000000</color>
+    <color name="overlayLight">#40FFFFFF</color>
+    <color name="overlayDark">#80000000</color>
+    
+    <!-- Cores de sombra -->
+    <color name="shadow">#1F000000</color>
+    <color name="shadowLight">#0A000000</color>
+    <color name="shadowDark">#3F000000</color>
+    
+    <!-- Cores de gradiente -->
+    <color name="gradientStart">#6A1B9A</color>
+    <color name="gradientEnd">#9C27B0</color>
+    
+    <!-- Cores de status bar -->
+    <color name="statusBar">#121212</color>
+    <color name="statusBarLight">#1E1E1E</color>
+    <color name="statusBarDark">#000000</color>
+    
+    <!-- Cores de navegação -->
+    <color name="navigationBar">#121212</color>
+    <color name="navigationBarLight">#1E1E1E</color>
+    <color name="navigationBarDark">#000000</color>
+    
+    <!-- Cores de destaque -->
+    <color name="highlight">#E040FB</color>
+    <color name="highlightLight">#F3E5F5</color>
+    <color name="highlightDark">#4A148C</color>
+    
+    <!-- Cores de feedback -->
+    <color name="success">#4CAF50</color>
+    <color name="successLight">#E8F5E9</color>
+    <color name="successDark">#2E7D32</color>
+    <color name="warning">#FFC107</color>
+    <color name="warningLight">#FFF8E1</color>
+    <color name="warningDark">#FF8F00</color>
+    <color name="error">#F44336</color>
+    <color name="errorLight">#FFEBEE</color>
+    <color name="errorDark">#C62828</color>
+    <color name="info">#2196F3</color>
+    <color name="infoLight">#E3F2FD</color>
+    <color name="infoDark">#1565C0</color>
+    
+    <!-- Cores de marca -->
+    <color name="brandPrimary">#6A1B9A</color>
+    <color name="brandSecondary">#9C27B0</color>
+    <color name="brandTertiary">#E040FB</color>
+    <color name="brandAccent">#FF4081</color>
+    
+    <!-- Cores de tema claro (não utilizadas no tema escuro, mas mantidas para referência) -->
+    <color name="lightBackground">#FFFFFF</color>
+    <color name="lightSurface">#FFFFFF</color>
+    <color name="lightOnBackground">#000000</color>
+    <color name="lightOnSurface">#000000</color>
+    <color name="lightTextPrimary">#000000</color>
+    <color name="lightTextSecondary">#757575</color>
+    <color name="lightTextTertiary">#9E9E9E</color>
+    <color name="lightTextDisabled">#BDBDBD</color>
+    <color name="lightIcon">#000000</color>
+    <color name="lightIconInactive">#9E9E9E</color>
+    <color name="lightBorder">#E0E0E0</color>
+    <color name="lightDivider">#E0E0E0</color>
+</resources>

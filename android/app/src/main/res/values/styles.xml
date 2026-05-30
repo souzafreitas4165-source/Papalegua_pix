@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Cores primárias -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
+        <item name="colorOnPrimary">@color/colorOnPrimary</item>
+        
+        <!-- Cores de destaque -->
+        <item name="colorSecondary">@color/colorSecondary</item>
+        <item name="colorSecondaryVariant">@color/colorSecondaryVariant</item>
+        <item name="colorOnSecondary">@color/colorOnSecondary</item>
+        
+        <!-- Cores de fundo -->
+        <item name="android:colorBackground">@color/background</item>
+        <item name="android:colorBackgroundFloating">@color/backgroundLight</item>
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="colorOnSurface">@color/colorOnSurface</item>
+        
+        <!-- Cores de erro -->
+        <item name="colorError">@color/error</item>
+        <item name="colorOnError">@color/colorOnError</item>
+        
+        <!-- Cores de texto -->
+        <item name="android:textColor">@color/textPrimary</item>
+        <item name="android:textColorPrimary">@color/textPrimary</item>
+        <item name="android:textColorSecondary">@color/textSecondary</item>
+        <item name="android:textColorTertiary">@color/textTertiary</item>
+        <item name="android:textColorHint">@color/textTertiary</item>
+        <item name="android:textColorLink">@color/colorAccent</item>
+        
+        <!-- Cores de ícones -->
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/navigationBar</item>
+        
+        <!-- Estilos de fonte -->
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="fontFamily">sans-serif</item>
+        
+        <!-- Estilos de borda -->
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        
+        <!-- Animações -->
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
+        <item name="android:windowEnterAnimation">@anim/slide_in_right</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_right</item>
+    </style>
+    
+    <!-- Tema de lançamento -->
+    <style name="LaunchTheme" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/launch_background</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+    
+    <!-- Tema normal -->
+    <style name="NormalTheme" parent="AppTheme">
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@color/navigationBar</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowLightNavigationBar">false</item>
+    </style>
+    
+    <!-- Estilo para diálogos -->
+    <style name="AppDialogTheme" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+        <item name="android:windowBackground">@color/backgroundCard</item>
+        <item name="colorSurface">@color/backgroundCard</item>
+        <item name="colorOnSurface">@color/textPrimary</item>
+        <item name="android:textColor">@color/textPrimary</item>
+        <item name="android:textColorPrimary">@color/textPrimary</item>
+        <item name="android:textColorSecondary">@color/textSecondary</item>
+        <item name="buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+        <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
+        <item name="buttonBarNeutralButtonStyle">@style/NeutralButtonStyle</item>
+    </style>
+    
+    <!-- Estilo para botões positivos -->
+    <style name="PositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+    
+    <!-- Estilo para botões negativos -->
+    <style name="NegativeButtonStyle" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/error</item>
+    </style>
+    
+    <!-- Estilo para botões neutros -->
+    <style name="NeutralButtonStyle" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:textColor">@color/textSecondary</item>
+    </style>
+    
+    <!-- Estilo para Toolbar -->
+    <style name="AppToolbarStyle" parent="Widget.MaterialComponents.Toolbar.Primary">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="titleTextColor">@color/colorOnPrimary</item>
+        <item name="subtitleTextColor">@color/colorOnPrimary</item>
+        <item name="android:elevation">4dp</item>
+        <item name="popupTheme">@style/ThemeOverlay.MaterialComponents.Dark</item>
+    </style>
+    
+    <!-- Estilo para Cards -->
+    <style name="AppCardStyle" parent="Widget.MaterialComponents.Card">
+        <item name="cardBackgroundColor">@color/backgroundCard</item>
+        <item name="cardElevation">2dp</item>
+        <item name="cardCornerRadius">8dp</item>
+        <item name="strokeColor">@color/border</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+    
+    <!-- Estilo para botões -->
+    <style name="AppButtonStyle" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@color/colorOnPrimary</item>
+        <item name="backgroundTint">@color/colorPrimary</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+    
+    <!-- Estilo para campos de texto -->
+    <style name="AppTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/colorPrimary</item>
+        <item name="boxStrokeWidth">1dp</item>
+        <item name="boxCornerRadiusTopStart">8dp</item>
+        <item name="boxCornerRadiusTopEnd">8dp</item>
+        <item name="boxCornerRadiusBottomStart">8dp</item>
+        <item name="boxCornerRadiusBottomEnd">8dp</item>
+        <item name="hintTextColor">@color/textSecondary</item>
+        <item name="android:textColorHint">@color/textTertiary</item>
+        <item name="android:textColor">@color/textPrimary</item>
+    </style>
+    
+    <!-- Estilo para CheckBox -->
+    <style name="AppCheckBoxStyle" parent="Widget.MaterialComponents.CompoundButton.CheckBox">
+        <item name="buttonTint">@color/colorPrimary</item>
+        <item name="android:textColor">@color/textPrimary</item>
+    </style>
+    
+    <!-- Estilo para RadioButton -->
+    <style name="AppRadioButtonStyle" parent="Widget.MaterialComponents.CompoundButton.RadioButton">
+        <item name="buttonTint">@color/colorPrimary</item>
+        <item name="android:textColor">@color/textPrimary</item>
+    </style>
+    
+    <!-- Estilo para Switch -->
+    <style name="AppSwitchStyle" parent="Widget.MaterialComponents.CompoundButton.Switch">
+        <item name="useMaterialThemeColors">true</item>
+        <item name="thumbTint">@color/colorPrimary</item>
+        <item name="trackTint">@color/colorPrimaryLight</item>
+    </style>
+    
+    <!-- Estilo para SeekBar -->
+    <style name="AppSeekBarStyle" parent="Widget.MaterialComponents.SeekBar">
+        <item name="android:progressTint">@color/colorPrimary</item>
+        <item name="android:progressBackgroundTint">@color/colorPrimaryLight</item>
+        <item name="android:thumbTint">@color/colorPrimary</item>
+    </style>
+    
+    <!-- Estilo para ProgressBar -->
+    <style name="AppProgressBarStyle" parent="Widget.MaterialComponents.ProgressIndicator">
+        <item name="indicatorColor">@color/colorPrimary</item>
+        <item name="trackColor">@color/colorPrimaryLight</item>
+        <item name="trackThickness">4dp</item>
+    </style>
+    
+    <!-- Estilo para Snackbar -->
+    <style name="AppSnackbarStyle" parent="Widget.MaterialComponents.Snackbar">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorOnPrimary</item>
+        <item name="actionTextColor">@color/colorAccent</item>
+    </style>
+    
+    <!-- Estilo para Tooltip -->
+    <style name="AppTooltipStyle" parent="ThemeOverlay.MaterialComponents.Tooltip">
+        <item name="android:background">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorOnPrimary</item>
+    </style>
+    
+    <!-- Animações de transição de janela -->
+    <style name="WindowAnimationTransition" parent="@android:style/Animation">
+        <item name="android:windowEnterAnimation">@anim/slide_in_right</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_right</item>
+    </style>
+</resources>

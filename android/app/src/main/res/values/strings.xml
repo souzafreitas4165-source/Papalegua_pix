@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Nome do aplicativo -->
+    <string name="app_name">Urubu do PIX</string>
+    
+    <!-- Configurações do Firebase -->
+    <string name="google_app_id" translatable="false">1:1234567890:android:1234567890abcdef12345</string>
+    <string name="gcm_defaultSenderId" translatable="false">1234567890</string>
+    <string name="google_api_key" translatable="false">AIzaSyXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</string>
+    <string name="google_crash_reporting_api_key" translatable="false">AIzaSyXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</string>
+    <string name="google_storage_bucket" translatable="false">your-project-id.appspot.com</string>
+    <string name="project_id" translatable="false">your-project-id</string>
+    
+    <!-- Configurações do Google Maps -->
+    <string name="google_maps_key" translatable="false" templateMergeStrategy="preserve">YOUR_GOOGLE_MAPS_API_KEY</string>
+    
+    <!-- Configurações de notificação -->
+    <string name="default_notification_channel_id" translatable="false">fcm_fallback_notification_channel</string>
+    <string name="fcm_fallback_notification_channel_label">@string/app_name</string>
+    
+    <!-- Mensagens de erro comuns -->
+    <string name="error_network">Erro de conexão. Verifique sua conexão com a internet.</string>
+    <string name="error_unknown">Ocorreu um erro inesperado. Tente novamente mais tarde.</string>
+    <string name="error_timeout">Tempo de conexão esgotado. Verifique sua conexão com a internet.</string>
+    
+    <!-- Mensagens de sucesso -->
+    <string name="success">Sucesso!</string>
+    <string name="success_saved">Salvo com sucesso!</string>
+    <string name="success_updated">Atualizado com sucesso!</string>
+    <string name="success_deleted">Excluído com sucesso!</string>
+    
+    <!-- Mensagens de confirmação -->
+    <string name="confirm_exit">Deseja realmente sair do aplicativo?</string>
+    <string name="confirm_delete">Tem certeza que deseja excluir este item?</string>
+    <string name="confirm_logout">Deseja realmente sair da sua conta?</string>
+    
+    <!-- Botões -->
+    <string name="btn_ok">OK</string>
+    <string name="btn_cancel">Cancelar</string>
+    <string name="btn_confirm">Confirmar</string>
+    <string name="btn_retry">Tentar novamente</string>
+    <string name="btn_save">Salvar</string>
+    <string name="btn_edit">Editar</string>
+    <string name="btn_delete">Excluir</string>
+    <string name="btn_back">Voltar</string>
+    <string name="btn_next">Próximo</string>
+    <string name="btn_finish">Concluir</string>
+    
+    <!-- Títulos de telas -->
+    <string name="title_home">Início</string>
+    <string name="title_profile">Perfil</string>
+    <string name="title_settings">Configurações</string>
+    <string name="title_help">Ajuda</string>
+    <string name="title_about">Sobre</string>
+    
+    <!-- Mensagens de validação -->
+    <string name="validation_required">Este campo é obrigatório</string>
+    <string name="validation_invalid_email">E-mail inválido</string>
+    <string name="validation_invalid_password">A senha deve conter pelo menos 6 caracteres</string>
+    <string name="validation_passwords_dont_match">As senhas não conferem</string>
+    
+    <!-- Mensagens de login -->
+    <string name="login_title">Bem-vindo de volta</string>
+    <string name="login_subtitle">Faça login para continuar</string>
+    <string name="login_email_hint">E-mail</string>
+    <string name="login_password_hint">Senha</string>
+    <string name="login_forgot_password">Esqueceu sua senha?</string>
+    <string name="login_button">Entrar</string>
+    <string name="login_register_message">Não tem uma conta? </string>
+    <string name="login_register_button">Cadastre-se</string>
+    
+    <!-- Mensagens de cadastro -->
+    <string name="register_title">Criar conta</string>
+    <string name="register_subtitle">Preencha os dados para se cadastrar</string>
+    <string name="register_name_hint">Nome completo</string>
+    <string name="register_email_hint">E-mail</string>
+    <string name="register_password_hint">Senha</string>
+    <string name="register_confirm_password_hint">Confirme a senha</string>
+    <string name="register_button">Cadastrar</string>
+    <string name="register_login_message">Já tem uma conta? </string>
+    <string name="register_login_button">Faça login</string>
+    
+    <!-- Mensagens de recuperação de senha -->
+    <string name="forgot_password_title">Recuperar senha</string>
+    <string name="forgot_password_subtitle">Informe seu e-mail para receber o link de recuperação</string>
+    <string name="forgot_password_email_hint">E-mail</string>
+    <string name="forgot_password_button">Enviar link</string>
+    <string name="forgot_password_success">E-mail de recuperação enviado com sucesso!</string>
+    
+    <!-- Mensagens de validação de formulário -->
+    <string name="form_validation_required">Este campo é obrigatório</string>
+    <string name="form_validation_invalid_email">E-mail inválido</string>
+    <string name="form_validation_invalid_phone">Telefone inválido</string>
+    <string name="form_validation_invalid_cpf">CPF inválido</string>
+    <string name="form_validation_invalid_cnpj">CNPJ inválido</string>
+    <string name="form_validation_invalid_cep">CEP inválido</string>
+    
+    <!-- Mensagens de erro de permissão -->
+    <string name="permission_denied">Permissão negada</string>
+    <string name="permission_denied_message">Para continuar, é necessário conceder a permissão solicitada</string>
+    <string name="permission_denied_never_ask_again">Permissão negada permanentemente. Por favor, ative a permissão nas configurações do aplicativo</string>
+    <string name="permission_rationale_title">Permissão necessária</string>
+    <string name="permission_rationale_message">Este aplicativo precisa da permissão para funcionar corretamente</string>
+    
+    <!-- Configurações de privacidade -->
+    <string name="privacy_policy_url" translatable="false">https://seusite.com.br/politica-de-privacidade</string>
+    <string name="terms_of_service_url" translatable="false">https://seusite.com.br/termos-de-uso</string>
+    
+    <!-- Versão do aplicativo -->
+    <string name="app_version" translatable="false">1.0.0</string>
+</resources>

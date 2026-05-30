@@ -1,0 +1,160 @@
+buildscript {
+    ext.kotlin_version = '1.9.22'  // Atualizado para a versão mais recente
+    ext.agp_version = '8.2.2'  // Versão do Android Gradle Plugin
+    
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+        maven { url 'https://maven.google.com' }
+    }
+
+    dependencies {
+        classpath "com.android.tools.build:gradle:$agp_version"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        
+        // Adiciona o plugin de serialização Kotlin
+        classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
+        
+        // Adiciona o plugin do Google Services (se necessário para Firebase)
+        // classpath 'com.google.gms:google-services:4.4.1'
+        
+        // Adiciona o plugin do Crashlytics (se necessário)
+        // classpath 'com.google.firebase:firebase-crashlytics-gradle:2.9.9'
+        
+        // Adiciona o plugin do Performance Monitoring (se necessário)
+        // classpath 'com.google.firebase:perf-plugin:1.4.2'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+        maven { url 'https://jitpack.io' }
+        maven { url 'https://maven.google.com' }
+    }
+    
+    // Configuração global de resolução de dependências
+    configurations.all {
+        resolutionStrategy {
+            // Força versões específicas para resolver conflitos
+            // AndroidX Lifecycle
+            force 'androidx.lifecycle:lifecycle-runtime:2.7.0'
+            force 'androidx.lifecycle:lifecycle-common:2.7.0'
+            force 'androidx.lifecycle:lifecycle-livedata:2.7.0'
+            force 'androidx.lifecycle:lifecycle-livedata-core:2.7.0'
+            force 'androidx.lifecycle:lifecycle-viewmodel:2.7.0'
+            force 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0'
+            force 'androidx.lifecycle:lifecycle-viewmodel-savedstate:2.7.0'
+            
+            // AndroidX Core
+            force 'androidx.annotation:annotation:1.8.0'
+            force 'androidx.annotation:annotation-jvm:1.8.0'
+            force 'androidx.core:core:1.13.1'
+            force 'androidx.core:core-ktx:1.13.1'
+            
+            // Kotlin
+            force 'org.jetbrains.kotlin:kotlin-stdlib:1.9.22'
+            force 'org.jetbrains.kotlin:kotlin-stdlib-common:1.9.22'
+            force 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.22'
+            force 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.22'
+            
+            // Coroutines
+            force 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3'
+            force 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
+            
+            // AndroidX Arch
+            force 'androidx.arch.core:core-common:2.2.0'
+            force 'androidx.arch.core:core-runtime:2.2.0'
+            
+            // Outras dependências AndroidX
+            force 'androidx.activity:activity:1.9.3'
+            force 'androidx.activity:activity-ktx:1.9.3'
+            force 'androidx.annotation:annotation-experimental:1.4.0'
+            force 'androidx.savedstate:savedstate:1.2.1'
+            force 'androidx.savedstate:savedstate-ktx:1.2.1'
+            force 'androidx.fragment:fragment:1.7.1'
+            force 'androidx.fragment:fragment-ktx:1.7.1'
+            force 'androidx.slidingpanelayout:slidingpanelayout:1.2.0'
+            force 'androidx.customview:customview:1.1.0'
+            force 'androidx.customview:customview-ktx:1.1.0'
+            force 'androidx.lifecycle:lifecycle-livedata-core-ktx:2.7.0'
+            force 'androidx.window:window:1.2.0'
+            force 'androidx.window:window-ktx:1.2.0'
+            force 'androidx.concurrent:concurrent-futures:1.1.0'
+            force 'androidx.profileinstaller:profileinstaller:1.3.1'
+            force 'androidx.collection:collection:1.4.0'
+            force 'androidx.collection:collection-ktx:1.4.0'
+            force 'androidx.tracing:tracing:1.2.0'
+            
+            // Annotations
+            force 'org.jetbrains:annotations:23.0.0'
+            
+            // Estratégia para resolução de conflitos
+            preferProjectModules()
+            failOnVersionConflict()
+            
+            // Atualização dinâmica de dependências
+            cacheDynamicVersionsFor 10, 'minutes'
+            cacheChangingModulesFor 0, 'seconds'
+        }
+    }
+    
+    // Configurações globais para compilação Java e Kotlin
+    tasks.withType(JavaCompile).configureEach { task ->
+        task.sourceCompatibility = JavaVersion.VERSION_17.toString()
+        task.targetCompatibility = JavaVersion.VERSION_17.toString()
+        
+        // Configurações adicionais para compilação Java
+        task.options.encoding = 'UTF-8'
+        task.options.incremental = true
+        task.options.fork = true
+        // Removendo a configuração explícita do executável javac
+        // para permitir que o Gradle use o JDK configurado corretamente
+        task.options.compilerArgs << '-Xlint:unchecked' << '-Xlint:deprecation'
+    }
+    
+    tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).configureEach {
+        kotlinOptions {
+            jvmTarget = '17'
+            freeCompilerArgs += [
+                '-Xjvm-default=all',
+                '-opt-in=kotlin.RequiresOptIn',
+                '-Xcontext-receivers'
+            ]
+            languageVersion = '1.9'
+            apiVersion = '1.9'
+        }
+    }
+    
+    // Configurações para evitar conflitos de dependências
+    configurations.all {
+        resolutionStrategy {
+            // Forçar versões específicas de dependências conflitantes
+            force 'androidx.core:core-ktx:1.12.0'
+            force 'androidx.lifecycle:lifecycle-runtime-ktx:2.7.0'
+            force 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
+            
+            // Desabilitar o uso de versões não estáveis
+            failOnVersionConflict()
+            
+            // Atualização dinâmica de dependências
+            cacheDynamicVersionsFor 10, 'minutes'
+            cacheChangingModulesFor 0, 'seconds'
+        }
+    }
+}
+
+rootProject.buildDir = '../build'
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+}
+
+subprojects {
+    project.evaluationDependsOn(':app')
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+} 
