@@ -1,0 +1,12 @@
+{
+  "appTitle": "Bank App",
+  "login": "Login",
+  "register": "Register",
+  "transfer": "Transfer",
+  "profile": "Profile",
+  "logout": "Logout",
+  "dashboard": "Dashboard",
+  "currency_real": "Real (BRL)",
+  "currency_dollar": "Dollar (USD)",
+  "currency_euro": "Euro (EUR)"
+}

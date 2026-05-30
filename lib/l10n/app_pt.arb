@@ -1,0 +1,12 @@
+{
+  "appTitle": "App de Banco",
+  "login": "Entrar",
+  "register": "Cadastrar",
+  "transfer": "Transferir",
+  "profile": "Perfil",
+  "logout": "Sair",
+  "dashboard": "Dashboard",
+  "currency_real": "Real (BRL)",
+  "currency_dollar": "Dólar (USD)",
+  "currency_euro": "Euro (EUR)"
+}

@@ -1,0 +1,420 @@
+import 'dart:async';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:flutter/services.dart';
+import '../services/api_service.dart';
+import '../widgets/currency_card.dart';
+
+class CotationScreen extends StatefulWidget {
+  const CotationScreen({super.key});
+
+  @override
+  State<CotationScreen> createState() => _CotationScreenState();
+}
+
+class _CotationScreenState extends State<CotationScreen> with SingleTickerProviderStateMixin {
+  double? _dollarRate;
+  double? _euroRate;
+  bool _isLoading = true;
+  bool _isRefreshing = false;
+  String? _error;
+  DateTime? _lastUpdated;
+  final TextEditingController _realController = TextEditingController();
+  late AnimationController _refreshController;
+
+  // Formatters
+  final _currencyFormat = NumberFormat.currency(locale: 'pt_BR', symbol: 'R\$');
+
+  @override
+  void initState() {
+    super.initState();
+    debugPrint('CotationScreen: initState');
+    _refreshController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    );
+    _fetchCotacoes();
+  }
+
+  @override
+  void dispose() {
+    debugPrint('CotationScreen: dispose');
+    _realController.dispose();
+    _refreshController.dispose();
+    _buttonTimer?.cancel();
+    super.dispose();
+  }
+
+  Future<void> _fetchCotacoes() async {
+    if ((_isLoading && _isRefreshing) || !mounted) return;
+    
+    // Usar um microtask para evitar atualizações durante o build
+    Future.microtask(() {
+      if (!mounted) return;
+      setState(() {
+        _isLoading = _lastUpdated == null; // Mostra loading apenas no primeiro carregamento
+        _isRefreshing = _lastUpdated != null; // Mostra indicador de atualização no pull-to-refresh
+        _error = null;
+      });
+    });
+    
+    try {
+      final cotacoes = await ApiService().fetchCotacoes();
+      if (!mounted) return;
+      
+      // Usar postFrameCallback para garantir que não estamos no meio de um build
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        setState(() {
+          _dollarRate = cotacoes['dolar']?.toDouble();
+          _euroRate = cotacoes['euro']?.toDouble();
+          _lastUpdated = DateTime.now();
+        });
+      });
+    } catch (e) {
+      if (!mounted) return;
+      
+      // Usar postFrameCallback para mostrar o SnackBar após o build
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Erro ao buscar cotações: ${e.toString()}'),
+            backgroundColor: Colors.red,
+            behavior: SnackBarBehavior.floating,
+          ),
+        );
+        
+        setState(() {
+          _error = 'Não foi possível carregar as cotações';
+        });
+      });
+    } finally {
+      // Usar postFrameCallback para garantir que não estamos no meio de um build
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (!mounted) return;
+        setState(() {
+          _isLoading = false;
+          _isRefreshing = false;
+        });
+      });
+    }
+  }
+  
+  // Format currency input
+  void _onAmountChanged(String value) {
+    if (value.isEmpty) {
+      _realController.clear();
+      setState(() {});
+      return;
+    }
+    
+    // Remove all non-digit characters
+    String digits = value.replaceAll(RegExp(r'[^0-9]'), '');
+    
+    // If empty after removing non-digits, clear the field
+    if (digits.isEmpty) {
+      _realController.clear();
+      setState(() {});
+      return;
+    }
+    
+    // Parse the value as cents to avoid floating point precision issues
+    final parsedValue = double.parse(digits) / 100;
+    
+    // Format the value as currency
+    final formattedValue = _currencyFormat.format(parsedValue);
+    
+    // Update the controller
+    _realController.value = TextEditingValue(
+      text: formattedValue,
+      selection: TextSelection.collapsed(offset: formattedValue.length),
+    );
+    
+    setState(() {});
+  }
+  
+  // Get the current amount in reais as a double
+  double? get _amountInReais {
+    if (_realController.text.isEmpty) return null;
+    final digits = _realController.text.replaceAll(RegExp(r'[^0-9]'), '');
+    if (digits.isEmpty) return null;
+    return double.parse(digits) / 100;
+  }
+  
+  // Calculate converted amount for a given rate
+  String _getConvertedAmount(double? rate) {
+    if (_amountInReais == null || rate == null || rate == 0) return '0.00';
+    return (_amountInReais! / rate).toStringAsFixed(2);
+  }
+
+  // Controlador para gerenciar o estado de hover dos cards
+  final Map<String, bool> _hoverStates = {
+    'dollar': false,
+    'euro': false,
+  };
+
+  // Controlador para evitar múltiplos toques rápidos
+  bool _isButtonDisabled = false;
+  Timer? _buttonTimer;
+
+  // Método para desabilitar temporariamente o botão
+  void _disableButtonTemporarily() {
+    if (_isButtonDisabled) return;
+    
+    _isButtonDisabled = true;
+    _buttonTimer = Timer(const Duration(milliseconds: 500), () {
+      if (mounted) {
+        setState(() => _isButtonDisabled = false);
+      }
+    });
+  }
+
+
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    
+    return WillPopScope(
+      onWillPop: () async {
+        if (_isButtonDisabled) return false;
+        debugPrint('WillPopScope: voltando...');
+        if (mounted) {
+          Navigator.of(context).pop();
+        }
+        return false;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Câmbio'),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: _isButtonDisabled
+                ? null
+                : () {
+                    debugPrint('Botão voltar pressionado');
+                    Navigator.of(context).pop();
+                  },
+          ),
+          actions: [
+            // Botão de atualização com proteção contra múltiplos toques
+            StatefulBuilder(
+              builder: (context, setState) {
+                return IconButton(
+                  icon: _isRefreshing
+                      ? const SizedBox(
+                          width: 24,
+                          height: 24,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        )
+                      : const Icon(Icons.refresh),
+                  onPressed: _isRefreshing || _isButtonDisabled
+                      ? null
+                      : () async {
+                          setState(() => _isRefreshing = true);
+                          _disableButtonTemporarily();
+                          await _fetchCotacoes();
+                          if (mounted) {
+                            setState(() => _isRefreshing = false);
+                          }
+                        },
+                );
+              },
+            ),
+          ],
+        ),
+        // Corpo principal
+        body: _buildBody(theme),
+      ),
+    );
+  }
+  
+  Widget _buildBody(ThemeData theme) {
+    if (_isLoading && _lastUpdated == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
+    
+    if (_error != null && _lastUpdated == null) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Icon(Icons.error_outline, size: 64, color: Colors.red),
+              const SizedBox(height: 16),
+              Text(
+                _error!,
+                textAlign: TextAlign.center,
+                style: theme.textTheme.titleMedium?.copyWith(color: Colors.red),
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton.icon(
+                onPressed: _fetchCotacoes,
+                icon: const Icon(Icons.refresh),
+                label: const Text('Tentar novamente'),
+              ),
+            ],
+          ),
+        ),
+      );
+    }
+    
+    return RefreshIndicator(
+      onRefresh: _fetchCotacoes,
+      child: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Header with last update time
+            if (_lastUpdated != null)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Cotações Atualizadas',
+                      style: theme.textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      'Atualizado: ${TimeOfDay.fromDateTime(_lastUpdated!).format(context)}',
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: theme.textTheme.bodySmall?.color?.withValues(alpha: 0.7),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            
+            // Input field for amount in BRL
+            TextFormField(
+              controller: _realController,
+              decoration: InputDecoration(
+                labelText: 'Valor em Reais',
+                hintText: 'R\$ 0,00',
+                prefixIcon: const Icon(Icons.attach_money),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                filled: true,
+                fillColor: theme.cardTheme.color,
+                suffixIcon: _realController.text.isNotEmpty
+                    ? IconButton(
+                        icon: const Icon(Icons.clear, size: 20),
+                        onPressed: () {
+                          _realController.clear();
+                          setState(() {});
+                        },
+                      )
+                    : null,
+              ),
+              keyboardType: TextInputType.number,
+              inputFormatters: [
+                FilteringTextInputFormatter.digitsOnly,
+              ],
+              onChanged: _onAmountChanged,
+              style: theme.textTheme.titleMedium?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            
+            const SizedBox(height: 24),
+            
+            // Currency cards
+            if (_dollarRate != null) _buildDollarCard(theme),
+            if (_euroRate != null) ...[
+              const SizedBox(height: 16),
+              _buildEuroCard(theme),
+            ],
+            
+            // Info text
+            Padding(
+              padding: const EdgeInsets.only(top: 24.0, bottom: 16.0),
+              child: Text(
+                'As cotações são atualizadas automaticamente e podem variar no momento da transação.',
+                style: theme.textTheme.bodySmall?.copyWith(
+                  color: theme.textTheme.bodySmall?.color?.withValues(alpha: 0.6),
+                  fontStyle: FontStyle.italic,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+  
+  // Usar memoization para evitar reconstruções desnecessárias
+  Widget _buildDollarCard(ThemeData theme) {
+    return RepaintBoundary(
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () {},
+          onHover: (isHovered) {
+            if (!mounted || _isButtonDisabled) return;
+            setState(() => _hoverStates['dollar'] = isHovered);
+          },
+          child: AnimatedOpacity(
+            duration: const Duration(milliseconds: 200),
+            opacity: _hoverStates['dollar']! ? 0.9 : 1.0,
+            child: CurrencyCard(
+              key: const ValueKey('card-dolar'),
+              currencyName: 'Dólar Americano',
+              currencyCode: 'USD',
+              amount: _dollarRate != null
+                  ? '1 USD = ${_currencyFormat.format(_dollarRate)}'
+                  : '--',
+              convertedAmount: _amountInReais != null && _dollarRate != null
+                  ? '${_getConvertedAmount(_dollarRate)} USD'
+                  : '0.00 USD',
+              icon: Icons.attach_money,
+              color: Colors.green,
+              isLoading: _isLoading,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+  
+  Widget _buildEuroCard(ThemeData theme) {
+    return RepaintBoundary(
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () {},
+          onHover: (isHovered) {
+            if (!mounted || _isButtonDisabled) return;
+            setState(() => _hoverStates['euro'] = isHovered);
+          },
+          child: AnimatedOpacity(
+            duration: const Duration(milliseconds: 200),
+            opacity: _hoverStates['euro']! ? 0.9 : 1.0,
+            child: CurrencyCard(
+              key: const ValueKey('card-euro'),
+              currencyName: 'Euro',
+              currencyCode: 'EUR',
+              amount: _euroRate != null
+                  ? '1 EUR = ${_currencyFormat.format(_euroRate)}'
+                  : '--',
+              convertedAmount: _amountInReais != null && _euroRate != null
+                  ? '${_getConvertedAmount(_euroRate)} EUR'
+                  : '0.00 EUR',
+              icon: Icons.euro,
+              color: Colors.blue,
+              isLoading: _isLoading,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
