@@ -1,4 +1,4 @@
-# 🏦 Urubu PIX - Banco Digital
+# 🏦 Papalegua PIX - Banco Digital
 
 [![Flutter](https://img.shields.io/badge/Flutter-3.16.0-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://flutter.dev/)
 [![Dart](https://img.shields.io/badge/Dart-3.0.0-0175C2?style=for-the-badge&logo=dart&logoColor=white)](https://dart.dev/)
